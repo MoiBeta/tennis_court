@@ -249,7 +249,8 @@ class CourtReservationSummary extends ConsumerWidget {
                                     selectedCourtModel.lendPrice),
                               );
                           if (context.mounted) {
-                            Navigator.of(context).popUntil(
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              AppRoutes.home,
                               ModalRoute.withName(AppRoutes.home),
                             );
                           }
@@ -278,7 +279,8 @@ class CourtReservationSummary extends ConsumerWidget {
                                   )),
                                 ),
                         onPressed: () {
-                          Navigator.of(context).popUntil(
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            AppRoutes.home,
                             ModalRoute.withName(AppRoutes.home),
                           );
                         },

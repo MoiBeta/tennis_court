@@ -13,7 +13,9 @@ import 'package:tennis_court/routes/app_routes.dart';
 import 'package:tennis_court/app/screens/home/widgets/home_drawer.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(
@@ -34,10 +36,98 @@ class HomePage extends ConsumerWidget {
         ref.watch(futureCourtReservationsListProvider);
 
     return Scaffold(
+      key: _key,
       drawer: const HomeDrawer(),
-      appBar: AppBar(
-        leading: const SizedBox(),
-        title: const Text('Tennis court'),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient:  LinearGradient(
+                  colors: [
+                    Color(0xFF072146),
+                    Color(0xFF82BC00),
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+              ),
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent,
+              leadingWidth: MediaQuery.of(context).size.width / 2.5,
+              leading: const Center(
+                child: Text(
+                    'Tennis court',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              actions: [
+                FutureBuilder(
+                    future:
+                    getFileFromUint8List(ref.watch(authNotifierProvider)!.picture),
+                    builder:
+                        (BuildContext context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(image: Image.file(
+                              snapshot.data!,
+                              width: 25,
+                              height: 25,
+                            ).image,
+                            ),
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      }
+                      return const Center(
+                        child: SizedBox(
+                          width: 10,
+                          height: 10,
+                          child:
+                          CircularProgressIndicator(),
+                        ),
+                      );
+                    }),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/svg/notifications.svg',
+                  ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    _key.currentState?.openDrawer();
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      right: 25
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/svg/menu.svg',
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ],
+        ),
+
       ),
       body: ListView(
         children: [
@@ -178,9 +268,9 @@ class HomePage extends ConsumerWidget {
                                                         BlendMode.srcIn),
                                               ),
                                               const SizedBox(
-                                                width: 5,
+                                                width: 4,
                                               ),
-                                              const Text('9 de julio 2024'),
+                                              const Text('7:00 am a 4:00 pm'),
                                             ],
                                           ),
                                         ],
@@ -197,7 +287,7 @@ class HomePage extends ConsumerWidget {
                                           child: FilledButton(
                                             onPressed: () {
                                               ref.read(selectedCourtProvider.notifier).state = court;
-                                              Navigator.of(ctx).pushNamed(AppRoutes.courtReservationMain);
+                                              Navigator.of(context).pushNamed(AppRoutes.courtReservationMain);
                                             },
                                             child: const Text('Reservar'),
                                           ),

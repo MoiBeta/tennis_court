@@ -29,10 +29,25 @@ class SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+    return Stack(
+      children: [
+        Image.asset(
+            'assets/images/background.png',
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          fit: BoxFit.fill,
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Image.asset(
+                'assets/images/logo.png',
+              width: 150,
+              height: 150,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

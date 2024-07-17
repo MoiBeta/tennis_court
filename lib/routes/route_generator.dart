@@ -15,7 +15,7 @@ class RouteGenerator {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => const SplashPage());
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => HomePage());
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const SignUpPage());
       case AppRoutes.auth:

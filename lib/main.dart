@@ -25,6 +25,7 @@ class MyApp extends ConsumerWidget {
       ) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       locale: const Locale('es', 'ES'),
       supportedLocales: const [
         Locale('en', 'US'),
